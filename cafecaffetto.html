@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAFFETTO by Patel's Biryaneez | Cafe in Khopoli</title>
+  <meta name="description" content="CAFFETTO by Patel's Biryaneez in Khopoli — pizzas, pasta, burgers, munchies and dessert. Order or reserve a table." />
+
+  <!-- Google Fonts: Editorial Luxury Pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            vanam: {
+              clay: '#9E4B2B',
+              clayDark: '#7C361B',
+              moss: '#243326',
+              olive: '#4E5D47',
+              ivory: '#FBF9F5',
+              linen: '#F2ECE1',
+              charcoal: '#1C1B19'
+            }
+          },
+          fontFamily: {
+            display: ['"Cinzel"', 'serif'],
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"DM Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #FBF9F5; }
+    ::-webkit-scrollbar-thumb { background: #9E4B2B; border-radius: 999px; }
+
+    /* Pure White Intro Splash Curtain */
+    #vanam-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+    }
+
+    #vanam-intro.slide-away {
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+
+    @keyframes emblemScale {
+      0% { opacity: 0; transform: scale(0.8) translateY(15px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes textRise {
+      0% { opacity: 0; transform: translateY(18px); letter-spacing: 0.35em; }
+      100% { opacity: 1; transform: translateY(0); letter-spacing: 0.14em; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .intro-emblem { animation: emblemScale 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .intro-title { opacity: 0; animation: textRise 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards; }
+    .intro-sub { opacity: 0; animation: fadeIn 0.9s ease 0.8s forwards; }
+
+    /* Marquee Ticker */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+
+    /* Reveal Animations */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-vanam-ivory text-vanam-charcoal font-sans antialiased selection:bg-vanam-clay selection:text-white overflow-x-hidden">
+
+  <!-- =========================================================
+       WHITE BACKGROUND LOGO INTRO SCREEN
+  ========================================================== -->
+  <div id="vanam-intro" aria-label="CAFFETTO Welcome Screen">
+    <div class="text-center px-6 flex flex-col items-center">
+      <!-- Circular Logo Frame -->
+      <div class="intro-emblem w-32 h-32 rounded-full bg-white border border-vanam-olive/20 shadow-xl shadow-black/5 flex items-center justify-center mb-6 overflow-hidden">
+        <img src="caffetoo.png" alt="CAFFETTO by Patel's Biryaneez" class="w-full h-full object-cover" />
+      </div>
+
+      <h1 class="intro-title font-serif text-6xl sm:text-7xl text-vanam-clay font-normal leading-none">
+        CAFFETTO
+      </h1>
+      <p class="intro-sub mt-3 text-xs sm:text-sm tracking-[0.35em] uppercase text-vanam-olive font-semibold">
+        by Patel's Biryaneez
+      </p>
+      <p class="intro-sub mt-2 text-[11px] text-gray-400 tracking-widest uppercase">
+        Khopoli &bull; Maharashtra
+      </p>
+
+      <button onclick="closeIntro()" class="intro-sub mt-8 px-5 py-2 rounded-full border border-vanam-clay/30 text-[11px] uppercase tracking-widest text-vanam-clay hover:bg-vanam-clay hover:text-white transition">
+        Enter Cafe
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       FLOATING PILL NAVIGATION BAR
+  ========================================================== -->
+  <div class="fixed top-4 left-0 right-0 z-50 px-4">
+    <header class="max-w-6xl mx-auto bg-white/90 backdrop-blur-lg border border-vanam-clay/15 rounded-full px-5 sm:px-8 h-16 flex items-center justify-between shadow-lg shadow-black/[0.04]">
+      <a href="#top" class="flex items-center gap-2.5">
+        <img src="caffetoo.png" alt="CAFFETTO" class="w-9 h-9 rounded-full object-cover" />
+        <span class="font-serif text-xl sm:text-2xl font-semibold text-vanam-clay tracking-wide">CAFFETTO</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest font-semibold text-vanam-moss">
+        <a href="#story" class="hover:text-vanam-clay transition">Story</a>
+        <a href="#menu" class="hover:text-vanam-clay transition">Menu</a>
+        <a href="#gallery" class="hover:text-vanam-clay transition">Gallery</a>
+        <a href="#reviews" class="hover:text-vanam-clay transition">Reviews</a>
+        <a href="#location" class="hover:text-vanam-clay transition">Visit</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <a href="#reserve" class="bg-vanam-moss hover:bg-vanam-clay text-white text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition">
+          Book Table
+        </a>
+        <button id="nav-toggle" class="md:hidden p-2 text-vanam-moss" aria-label="Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-drawer" class="hidden md:hidden max-w-6xl mx-auto mt-2 bg-white rounded-3xl shadow-xl border border-gray-100 p-5 space-y-3 text-xs uppercase tracking-widest font-semibold text-vanam-moss">
+      <a href="#story" class="block py-1.5">Story</a>
+      <a href="#menu" class="block py-1.5">Menu</a>
+      <a href="#gallery" class="block py-1.5">Gallery</a>
+      <a href="#reviews" class="block py-1.5">Reviews</a>
+      <a href="#location" class="block py-1.5">Visit</a>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       EDITORIAL SPLIT HERO SECTION
+  ========================================================== -->
+  <section id="top" class="pt-28 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <!-- Left Editorial Typography -->
+      <div class="lg:col-span-6 space-y-6">
+        <div class="inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.25em] font-bold text-vanam-olive">
+          <span class="w-8 h-[1px] bg-vanam-clay"></span>
+          Old Mumbai-Pune Highway &bull; Khopoli
+        </div>
+
+        <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal text-vanam-moss leading-[1.03]">
+          Good Food, <span class="italic text-vanam-clay">Great Mood.</span>
+        </h1>
+
+        <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-lg">
+          Explore pizzas, creamy pastas, loaded burgers, crispy munchies and indulgent desserts at CAFFETTO by Patel's Biryaneez.
+        </p>
+
+        <!-- Key Metrics Strip -->
+        <div class="grid grid-cols-3 gap-4 pt-2 pb-2 border-y border-vanam-clay/15">
+          <div>
+            <p class="font-serif text-2xl sm:text-3xl font-semibold text-vanam-clay">Veg +</p>
+            <p class="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Non-Veg Menu</p>
+          </div>
+          <div>
+            <p class="font-serif text-2xl sm:text-3xl font-semibold text-vanam-moss">₹200–1200</p>
+            <p class="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Per Person</p>
+          </div>
+          <div>
+            <p class="font-serif text-2xl sm:text-3xl font-semibold text-vanam-clay">Dine-In</p>
+            <p class="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Pickup & Delivery</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <a href="#reserve" class="inline-flex items-center gap-2.5 bg-vanam-clay hover:bg-vanam-clayDark text-white text-sm font-semibold px-7 py-4 rounded-full shadow-lg shadow-vanam-clay/20 transition">
+            <span>Book via WhatsApp</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="#menu" class="inline-flex items-center gap-2 border border-vanam-moss/25 hover:border-vanam-moss text-vanam-moss text-sm font-semibold px-7 py-4 rounded-full transition">
+            View Full Menu
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Dual-Frame Photo Collage -->
+      <div class="lg:col-span-6 grid grid-cols-12 gap-4 items-center">
+        <div class="col-span-7 rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white aspect-[3/4] bg-vanam-linen">
+          <img
+            src="ccaffetoo photos/interirors-enhanced.png"
+            alt="Warm interior of CAFFETTO"
+            class="w-full h-full object-cover hover:scale-105 transition duration-700"
+          />
+        </div>
+        <div class="col-span-5 space-y-4">
+          <div class="rounded-[1.75rem] overflow-hidden shadow-xl border-4 border-white aspect-square bg-vanam-linen">
+            <img
+              src="ccaffetoo photos/reception.png"
+              alt="CAFFETTO reception and cafe interior"
+              class="w-full h-full object-cover hover:scale-105 transition duration-700"
+            />
+          </div>
+          <div class="bg-vanam-moss text-white p-5 rounded-[1.75rem] shadow-lg">
+            <p class="text-amber-300 text-xs tracking-widest uppercase font-bold">Must Try</p>
+            <p class="font-serif text-xl mt-1 leading-snug">Red Sauce Pasta & Mushroom Sandwich</p>
+            <p class="text-[11px] text-white/70 mt-2">Recommended by guests & local guides</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BOTANICAL MARQUEE TICKER
+  ========================================================== -->
+  <div class="bg-vanam-moss text-vanam-ivory py-3.5 overflow-hidden border-y border-white/10">
+    <div class="animate-marquee whitespace-nowrap text-xs uppercase tracking-[0.28em] font-medium flex items-center gap-10">
+      <span>Veg and Non-Veg Pizzas</span> <span>&bull;</span>
+      <span>Pasta, Burgers and Loaded Fries</span> <span>&bull;</span>
+      <span>CAFFETTO — Khopoli</span> <span>&bull;</span>
+      <span>Dine-In, Pickup and Delivery</span> <span>&bull;</span>
+      <span>Family-Friendly Cafe</span> <span>&bull;</span>
+      <span>Veg and Non-Veg Pizzas</span> <span>&bull;</span>
+      <span>Pasta, Burgers and Loaded Fries</span> <span>&bull;</span>
+      <span>CAFFETTO — Khopoli</span> <span>&bull;</span>
+      <span>Dine-In, Pickup and Delivery</span> <span>&bull;</span>
+      <span>Family-Friendly Cafe</span> <span>&bull;</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       STORY & HOSPITALITY SECTION
+  ========================================================== -->
+  <section id="story" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+      <div class="grid md:grid-cols-12 gap-10 items-center">
+        <div class="md:col-span-5">
+          <div class="rounded-[2rem] overflow-hidden shadow-xl aspect-[4/4.5] bg-vanam-linen">
+            <img
+              src="ccaffetoo photos/dinings.png"
+              alt="Dining area inside CAFFETTO"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+        <div class="md:col-span-7 space-y-6">
+          <span class="text-xs font-bold uppercase tracking-[0.25em] text-vanam-clay">Our Philosophy</span>
+          <h2 class="font-serif text-4xl sm:text-5xl text-vanam-moss leading-tight">
+            Where Warm Hospitality Meets Serene Greenery.
+          </h2>
+          <p class="text-gray-600 leading-relaxed">
+            CAFFETTO by Patel's Biryaneez brings together comforting cafe classics and bold flavor. Visit us on the Old Mumbai-Pune Highway for pizzas, pastas, burgers, fries and loaded munchies in a casual, family-friendly setting.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-2xl bg-vanam-ivory border border-vanam-clay/10">
+              <h4 class="font-serif text-xl font-semibold text-vanam-moss">Casual Cafe Dining</h4>
+              <p class="text-xs text-gray-600 mt-1">A relaxed spot for family meals, quick bites and coffee.</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-vanam-ivory border border-vanam-clay/10">
+              <h4 class="font-serif text-xl font-semibold text-vanam-moss">Easy Pickup & Delivery</h4>
+              <p class="text-xs text-gray-600 mt-1">Convenient pickup and delivery options are available.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       INTERACTIVE SEARCHABLE MENU BOOK
+  ========================================================== -->
+  <section id="menu" class="py-20 bg-vanam-ivory">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-[0.25em] text-vanam-clay">Veg & Non-Veg Cafe</span>
+          <h2 class="font-serif text-4xl sm:text-5xl text-vanam-moss mt-2">The CAFFETTO Menu</h2>
+        </div>
+
+        <!-- Live Search Bar -->
+        <div class="relative w-full md:w-72">
+          <input
+            type="text"
+            id="menu-search"
+            placeholder="Search pizza, pasta, burger..."
+            class="w-full pl-10 pr-4 py-2.5 rounded-full bg-white border border-vanam-clay/20 text-sm focus:outline-none focus:border-vanam-clay"
+          />
+          <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+      </div>
+
+      <!-- Category Filter Buttons -->
+      <div class="flex flex-wrap gap-2 mb-10" id="cat-buttons">
+        <button data-filter="all" class="cat-btn active px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-vanam-moss text-white transition">All</button>
+        <button data-filter="Pizzas" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-vanam-moss border border-gray-200 hover:border-vanam-clay transition">Pizzas</button>
+        <button data-filter="Pastas" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-vanam-moss border border-gray-200 hover:border-vanam-clay transition">Pastas</button>
+        <button data-filter="Munchies" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-vanam-moss border border-gray-200 hover:border-vanam-clay transition">Munchies</button>
+        <button data-filter="Burgers" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-vanam-moss border border-gray-200 hover:border-vanam-clay transition">Burgers</button>
+        <button data-filter="Desserts" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-vanam-moss border border-gray-200 hover:border-vanam-clay transition">Desserts</button>
+        <button data-filter="Fries" class="cat-btn px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-white text-vanam-moss border border-gray-200 hover:border-vanam-clay transition">Loaded Fries</button>
+      </div>
+
+      <!-- Menu List Grid -->
+      <div id="menu-list" class="grid md:grid-cols-2 gap-x-10 gap-y-6"></div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       CURATED PHOTO GALLERY
+  ========================================================== -->
+  <section id="gallery" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-vanam-clay">Captured Moments</span>
+        <h2 class="font-serif text-4xl sm:text-5xl text-vanam-moss mt-2">A Taste of Caffetto</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+        <div class="md:col-span-5 rounded-3xl overflow-hidden shadow-lg h-80 md:h-96 relative group">
+          <img src="ccaffetoo photos/interirors-enhanced.png" alt="Warm CAFFETTO interior" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-vanam-moss">Cafe Interior</div>
+        </div>
+        <div class="md:col-span-4 rounded-3xl overflow-hidden shadow-lg h-80 md:h-96 relative group">
+          <img src="ccaffetoo photos/dinings.png" alt="CAFFETTO dining area" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-vanam-moss">Dining Space</div>
+        </div>
+        <div class="md:col-span-3 rounded-3xl overflow-hidden shadow-lg h-80 md:h-96 relative group">
+          <img src="ccaffetoo photos/reception.png" alt="CAFFETTO reception" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-vanam-moss">Welcome to Caffetto</div>
+        </div>
+        <div class="md:col-span-4 rounded-3xl overflow-hidden shadow-lg h-80 relative group">
+          <img src="ccaffetoo photos/image.png" alt="Seating and decor at CAFFETTO" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+          <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs font-bold text-vanam-moss">Cafe Ambience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TESTIMONIALS SHOWCASE
+  ========================================================== -->
+  <section id="reviews" class="py-20 bg-vanam-linen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-[0.25em] text-vanam-clay">Guest Reviews</span>
+        <h2 class="font-serif text-4xl sm:text-5xl text-vanam-moss mt-2">What Guests Are Saying</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <article class="bg-white p-7 rounded-3xl shadow-sm border border-vanam-clay/10">
+          <div class="flex items-center justify-between gap-3"><h3 class="font-serif text-2xl text-vanam-moss">Sagar Mishra</h3><span class="text-amber-500 tracking-wider" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">This was my 3rd visit here, and I think I've finally found my go-to place! &#128522; The Neapolitan-style pizzas are really good, and the peri peri cheesy fries are a must-try. The place has such a nice vibe with a warm, cozy ambience. It's a great spot to hang out, chill, and enjoy some good food and games. Definitely coming back again!</p>
+          <p class="text-xs text-gray-500 mt-5 pt-4 border-t border-gray-100"><strong class="text-vanam-moss">Food:</strong> 5 &nbsp; <strong class="text-vanam-moss">Service:</strong> 3 &nbsp; <strong class="text-vanam-moss">Atmosphere:</strong> 4</p>
+        </article>
+        <article class="bg-white p-7 rounded-3xl shadow-sm border border-vanam-clay/10">
+          <div class="flex items-center justify-between gap-3"><h3 class="font-serif text-2xl text-vanam-moss">Zahida Khan</h3><span class="text-amber-500 tracking-wider" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">Loaded fries, spaghetti pasta, momos and cappuccino coffee was amazing. The taste is superb and the service was also fast. The atmosphere was cool and silent; we really enjoyed this joyful time at Caffetto...&#10084;&#65039;</p>
+          <p class="text-xs text-gray-500 mt-5 pt-4 border-t border-gray-100"><strong class="text-vanam-moss">Food:</strong> 5 &nbsp; <strong class="text-vanam-moss">Service:</strong> 5 &nbsp; <strong class="text-vanam-moss">Atmosphere:</strong> 5</p>
+        </article>
+        <article class="bg-white p-7 rounded-3xl shadow-sm border border-vanam-clay/10">
+          <div class="flex items-center justify-between gap-3"><h3 class="font-serif text-2xl text-vanam-moss">Abhijeet Shedge</h3><span class="text-amber-500 tracking-wider" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">Visited Caffetto by Patel's Biryani in Khopoli and had a really enjoyable experience. The caf? has a beautiful ambience with comfortable seating, making it a perfect place to relax and catch up with friends or family. We tried the coffee and a few snacks, and everything was fresh, tasty, and well presented. The service was quick, and the staff was friendly and courteous, which made the visit even better. If you're in Khopoli and looking for a cozy cafe with good food, great coffee, and a pleasant atmosphere, Caffetto by Patel's Biryani is definitely worth a visit. Highly recommended!</p>
+          <p class="text-xs text-gray-500 mt-5 pt-4 border-t border-gray-100"><strong class="text-vanam-moss">Food:</strong> 5 &nbsp; <strong class="text-vanam-moss">Service:</strong> 5 &nbsp; <strong class="text-vanam-moss">Atmosphere:</strong> 5</p>
+        </article>
+        <article class="bg-white p-7 rounded-3xl shadow-sm border border-vanam-clay/10">
+          <div class="flex items-center justify-between gap-3"><h3 class="font-serif text-2xl text-vanam-moss">Gurleen Singh</h3><span class="text-amber-500 tracking-wider" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+          <p class="text-sm text-gray-600 mt-4 leading-relaxed">The friendliest cafe in town. What sets Caffetto apart is the wonderful hospitality. From the moment I walked in, the staff made me feel right at home. Also the coffee was wonderful.</p>
+          <p class="text-xs text-gray-500 mt-5 pt-4 border-t border-gray-100"><strong class="text-vanam-moss">Food:</strong> 5 &nbsp; <strong class="text-vanam-moss">Service:</strong> 5 &nbsp; <strong class="text-vanam-moss">Atmosphere:</strong> 5</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       WHATSAPP TABLE RESERVATION & LOCATION SPLIT
+  ========================================================== -->
+  <section id="reserve" class="py-20 bg-vanam-moss text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+      <div class="grid lg:grid-cols-12 gap-12 items-start">
+        <!-- WhatsApp Booking Form (7 Cols) -->
+        <div class="lg:col-span-7 bg-white text-vanam-charcoal rounded-[2rem] p-8 sm:p-10 shadow-2xl">
+          <span class="text-xs font-bold uppercase tracking-[0.25em] text-vanam-clay">Direct WhatsApp Desk</span>
+          <h2 class="font-serif text-3xl sm:text-4xl text-vanam-moss mt-1">Book Your Table</h2>
+          <p class="text-xs sm:text-sm text-gray-500 mt-1">Reservation and enquiry desk for CAFFETTO (088884 68113).</p>
+
+          <form id="wa-form" class="mt-6 space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Full Name *</label>
+                <input type="text" id="wa-name" required placeholder="Enter your name" class="w-full px-4 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-sm focus:border-vanam-clay outline-none" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Mobile Number *</label>
+                <input type="tel" id="wa-phone" required placeholder="e.g. 98220 XXXXX" class="w-full px-4 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-sm focus:border-vanam-clay outline-none" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Date *</label>
+                <input type="date" id="wa-date" required class="w-full px-3 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-xs sm:text-sm focus:border-vanam-clay outline-none" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Time *</label>
+                <select id="wa-time" class="w-full px-3 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-xs sm:text-sm focus:border-vanam-clay outline-none">
+                  <option>10:30 AM</option>
+                  <option>12:00 PM</option>
+                  <option selected>01:30 PM</option>
+                  <option>04:00 PM</option>
+                  <option>06:30 PM</option>
+                  <option>08:30 PM</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Guests *</label>
+                <select id="wa-guests" class="w-full px-3 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-xs sm:text-sm focus:border-vanam-clay outline-none">
+                  <option>2 People</option>
+                  <option selected>4 People</option>
+                  <option>6 People</option>
+                  <option>8+ Group</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Table Area</label>
+              <select id="wa-zone" class="w-full px-4 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-sm focus:border-vanam-clay outline-none">
+                <option>Indoor Seating</option>
+                <option>Family Seating</option>
+                <option>Quick Pickup</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-600 mb-1">Dish Pre-Order / Special Request</label>
+              <textarea id="wa-notes" rows="2" placeholder="Optional: Add dishes from menu or special notes..." class="w-full px-4 py-3 rounded-xl bg-vanam-ivory border border-gray-200 text-sm focus:border-vanam-clay outline-none"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-4 rounded-xl bg-[#25D366] hover:bg-[#1fb858] text-white font-bold text-sm uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition">
+              <span>Confirm Table on WhatsApp</span>
+              <span>&rarr;</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Location & Hours Details (5 Cols) -->
+        <div id="location" class="lg:col-span-5 space-y-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-[0.25em] text-amber-300">Visit Us</span>
+            <h3 class="font-serif text-3xl sm:text-4xl mt-1">CAFFETTO by Patel's Biryaneez</h3>
+            <p class="text-white/80 text-sm mt-2">Building No. 1, Aashiyana Infinity, Shop 103 & 104, Old Mumbai-Pune Highway, Khopoli, Maharashtra 410203 &bull; Plus Code: Q8MJ+76 Khopoli</p>
+          </div>
+
+          <div class="bg-white/10 border border-white/15 rounded-2xl p-5 space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-white/75">Average Cost</span><span class="font-semibold">₹200 – ₹1,200 per person</span></div>
+            <div class="flex justify-between"><span class="text-white/75">Phone / WhatsApp</span><a href="tel:+918888468113" class="font-semibold underline">088884 68113</a></div>
+          </div>
+
+          <div class="rounded-2xl overflow-hidden h-60 border border-white/15 shadow-lg">
+            <iframe
+              title="CAFFETTO by Patel's Biryaneez Map"
+              width="100%"
+              height="100%"
+              style="border:0"
+              loading="lazy"
+              src="https://maps.google.com/maps?q=18.7957313,73.3305394&t=&z=17&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-vanam-charcoal text-white/60 py-8 text-center text-xs">
+    <p class="font-serif text-xl text-white mb-1">CAFFETTO &mdash; by Patel's Biryaneez</p>
+    <p>Old Mumbai-Pune Highway, Khopoli, Maharashtra 410203 &bull; 088884 68113</p>
+  </footer>
+
+  <!-- =========================================================
+       JAVASCRIPT LOGIC
+  ========================================================== -->
+  <script>
+    // Intro Curtain Dismissal
+    function closeIntro() {
+      document.getElementById('vanam-intro').classList.add('slide-away');
+    }
+    window.addEventListener('load', () => setTimeout(closeIntro, 2300));
+
+    // Mobile Drawer
+    document.getElementById('nav-toggle').addEventListener('click', () => {
+      document.getElementById('mobile-drawer').classList.toggle('hidden');
+    });
+
+    // CAFFETTO menu highlights
+    const dishes = [
+      { cat: 'Pizzas', name: 'Caffetto Capricciosa Pizza', price: 507, desc: 'Classic pizza with tomato sauce, vegetables and Italian flavours.' },
+      { cat: 'Pizzas', name: 'Caffetto Veggie Exotica Pizza', price: 507, desc: 'Loaded with colourful vegetables and fresh cheese.', tag: 'Popular' },
+      { cat: 'Pizzas', name: 'Paneer Makhani Supreme Pizza', price: 527, desc: 'Paneer makhani-style topping on a rich tomato base.' },
+      { cat: 'Pizzas', name: 'Chicken Marinara Pizza', price: 417, desc: 'Chicken with tomato, herbs and melted cheese.' },
+      { cat: 'Pizzas', name: 'Caffetto Spiced Chicken Pizza', price: 437, desc: 'Spiced chicken pizza with peppers and onion.' },
+
+      { cat: 'Pastas', name: 'Caffetto Penne Arrabbiata Pasta', price: 335, desc: 'Penne in a bold tomato sauce with herbs and garlic.' },
+      { cat: 'Pastas', name: 'Penne Blanco Pasta', price: 310, desc: 'Creamy penne with cheese and aromatic herbs.' },
+      { cat: 'Pastas', name: 'Spaghetti Blanco Pasta', price: 350, desc: 'Spaghetti tossed in a smooth, creamy cheese sauce.' },
+      { cat: 'Pastas', name: 'Penne Blanco Con Pollo Pasta', price: 399, desc: 'Creamy penne with tender chicken and Italian seasoning.' },
+
+      { cat: 'Munchies', name: 'Caffetto Cheese Sticks', price: 320, desc: 'Golden cheese sticks with a crisp coating.', tag: 'Popular' },
+      { cat: 'Munchies', name: 'Classic Cheesy Fries', price: 228, desc: 'Crispy fries finished with creamy cheese.' },
+      { cat: 'Munchies', name: 'Peri Peri Cheesy Fries', price: 289, desc: 'Cheesy fries tossed with lively peri peri spice.' },
+      { cat: 'Munchies', name: 'Mozzarella Cheese Sticks', price: 330, desc: 'Hot mozzarella sticks with a crunchy crumb coating.' },
+      { cat: 'Munchies', name: 'Rustic Hand-Cut Wedges', price: 229, desc: 'Golden potato wedges seasoned and served with dips.' },
+
+      { cat: 'Burgers', name: 'Classic Veggie Burger', price: 289, desc: 'Vegetable patty with fresh toppings and house sauce.' },
+      { cat: 'Burgers', name: 'Classic Paneer Burger', price: 300, desc: 'Paneer patty with crisp vegetables and burger sauce.' },
+      { cat: 'Burgers', name: 'Spicy Veggie Dynamite Burger', price: 380, desc: 'A spicy veggie burger with crunchy vegetables.' },
+      { cat: 'Burgers', name: 'Hot & Spicy Zinger Burger', price: 380, desc: 'Crispy hot chicken patty with zesty sauce.' },
+      { cat: 'Burgers', name: 'Tandoori Zinger Burger', price: 450, desc: 'Tandoori-spiced chicken in a soft, toasted bun.' },
+
+      { cat: 'Desserts', name: 'Midnight Dark Truffle', price: 180, desc: 'Rich chocolate dark truffle dessert.' },
+      { cat: 'Fries', name: 'Caffetto Special Loaded Fries', price: 359, desc: 'Loaded fries with peppers and signature toppings.' },
+      { cat: 'Fries', name: 'Chicken Loaded Fries', price: 450, desc: 'Crunchy fries topped with spiced chicken and cheese.' }
+    ];
+
+    let activeCat = 'all';
+    let searchQuery = '';
+
+    function renderMenuList() {
+      const container = document.getElementById('menu-list');
+      const filtered = dishes.filter(d => {
+        const matchCat = activeCat === 'all' || d.cat === activeCat;
+        const matchText = d.name.toLowerCase().includes(searchQuery) || d.desc.toLowerCase().includes(searchQuery);
+        return matchCat && matchText;
+      });
+
+      container.innerHTML = filtered.map(d => `
+        <div class="flex items-start justify-between gap-4 pb-5 border-b border-vanam-clay/15">
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="w-3.5 h-3.5 border border-emerald-600 flex items-center justify-center rounded-[2px]">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+              </span>
+              <h3 class="font-serif text-xl font-semibold text-vanam-moss">${d.name}</h3>
+              ${d.tag ? `<span class="text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-vanam-clay/10 text-vanam-clay">${d.tag}</span>` : ''}
+            </div>
+            <p class="text-xs text-gray-500 mt-1">${d.desc}</p>
+            <button onclick="addDishToForm('${d.name.replace(/'/g, "\\'")}')" class="mt-2 text-[11px] font-semibold text-vanam-olive hover:text-vanam-clay transition">
+              + Include in WhatsApp Booking
+            </button>
+          </div>
+          <span class="font-bold text-vanam-clay text-base shrink-0">₹${d.price}</span>
+        </div>
+      `).join('');
+    }
+    renderMenuList();
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => {
+          b.classList.remove('bg-vanam-moss', 'text-white');
+          b.classList.add('bg-white', 'text-vanam-moss', 'border', 'border-gray-200');
+        });
+        btn.classList.add('bg-vanam-moss', 'text-white');
+        btn.classList.remove('bg-white', 'text-vanam-moss', 'border', 'border-gray-200');
+        activeCat = btn.dataset.filter;
+        renderMenuList();
+      });
+    });
+
+    document.getElementById('menu-search').addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderMenuList();
+    });
+
+    function addDishToForm(name) {
+      const notes = document.getElementById('wa-notes');
+      notes.value = notes.value ? `${notes.value}, ${name}` : `Pre-order: ${name}`;
+      document.getElementById('reserve').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Set default date & submit to WhatsApp (088884 68113)
+    const waDate = document.getElementById('wa-date');
+    const todayStr = new Date().toISOString().split('T')[0];
+    waDate.min = todayStr;
+    waDate.value = todayStr;
+
+    document.getElementById('wa-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('wa-name').value.trim();
+      const phone = document.getElementById('wa-phone').value.trim();
+      const date = document.getElementById('wa-date').value;
+      const time = document.getElementById('wa-time').value;
+      const guests = document.getElementById('wa-guests').value;
+      const zone = document.getElementById('wa-zone').value;
+      const notes = document.getElementById('wa-notes').value.trim();
+
+      const msg =
+        `🍽️ *TABLE BOOKING — CAFFETTO* 🍽️%0A` +
+        `_(by Patel's Biryaneez, Khopoli)_%0A%0A` +
+        `👤 *Name:* ${encodeURIComponent(name)}%0A` +
+        `📞 *Phone:* ${encodeURIComponent(phone)}%0A` +
+        `📅 *Date:* ${encodeURIComponent(date)}%0A` +
+        `⏰ *Time:* ${encodeURIComponent(time)}%0A` +
+        `👥 *Guests:* ${encodeURIComponent(guests)}%0A` +
+        `🪑 *Seating:* ${encodeURIComponent(zone)}%0A` +
+        (notes ? `🍽️ *Notes:* ${encodeURIComponent(notes)}%0A` : '') +
+        `%0AKindly confirm our reservation. Thank you!`;
+
+      window.open(`https://wa.me/918888468113?text=${msg}`, '_blank');
+    });
+
+    // Scroll Reveal
+    const revObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal-up').forEach(el => revObs.observe(el));
+  </script>
+</body>
+</html>
